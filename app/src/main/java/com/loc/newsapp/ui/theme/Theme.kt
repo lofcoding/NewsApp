@@ -17,15 +17,15 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    background = Black,
     primary = Blue,
+    background = Black,
     error = DarkRed,
     surface = LightBlack
 )
 
 private val LightColorScheme = lightColorScheme(
-    background = Color.White,
     primary = Blue,
+    background = Color.White,
     error = LightRed,
     surface = Color.White
 )

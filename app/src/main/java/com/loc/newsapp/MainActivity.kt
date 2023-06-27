@@ -29,7 +29,9 @@ class MainActivity : ComponentActivity() {
 
         installSplashScreen()
         setContent {
-            NewsAppTheme {
+            NewsAppTheme(
+                dynamicColor = false
+            ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                     OnBoardingScreen()
                 }
