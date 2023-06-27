@@ -1,5 +1,7 @@
 package com.loc.newsapp.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val Black = Color(0xFF1C1E21) //Dark Background
