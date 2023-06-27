@@ -13,6 +13,7 @@ val Poppins = FontFamily(
     fonts = listOf(
         Font(R.font.poppins_regular, FontWeight.Normal),
         Font(R.font.poppins_bold, FontWeight.Bold),
+        Font(R.font.poppins_semibold, FontWeight.SemiBold),
     )
 )
 
@@ -49,5 +50,5 @@ val Typography = Typography(
         fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
         lineHeight = 19.sp,
-    )
+    ),
 )
