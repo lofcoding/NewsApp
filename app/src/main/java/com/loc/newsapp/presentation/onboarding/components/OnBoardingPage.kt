@@ -1,4 +1,4 @@
-package com.loc.newsapp.presentation.onboarding
+package com.loc.newsapp.presentation.onboarding.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.loc.newsapp.R
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
 import com.loc.newsapp.presentation.Dimens.MediumPadding2
+import com.loc.newsapp.presentation.onboarding.Page
 import com.loc.newsapp.ui.theme.NewsAppTheme
 
 @Composable
@@ -62,7 +63,8 @@ fun OnBoardingPagePreview() {
             title = "Lorem Ipsum is simply dummy",
             description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             image = R.drawable.onboarding1
-        ))
+        )
+        )
     }
 }
 

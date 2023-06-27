@@ -49,5 +49,5 @@ val Typography = Typography(
         fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
         lineHeight = 19.sp,
-    )
+    ),
 )
