@@ -14,7 +14,7 @@
         android:theme="@style/App.Starting.Theme"
         tools:targetApi="31" >
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.mainActivity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/App.Starting.Theme" >
