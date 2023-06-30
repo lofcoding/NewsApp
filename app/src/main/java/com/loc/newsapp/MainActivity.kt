@@ -21,7 +21,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.loc.newsapp.presentation.onboarding.OnBoardingScreen
 import com.loc.newsapp.ui.theme.NewsAppTheme
 
-//TODO: Use the accompanist library to change the colors of the status bar
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
