@@ -40,14 +40,6 @@ import kotlinx.coroutines.launch
 fun OnBoardingScreen(
     onEvent: (OnBoardingEvent) -> Unit
 ) {
-    val isSystemInDarkMode = isSystemInDarkTheme()
-    val systemUiColor = rememberSystemUiController()
-    SideEffect {
-        systemUiColor.setSystemBarsColor(
-            color = Color.Black.copy(0.1f),
-            darkIcons = isSystemInDarkMode
-        )
-    }
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
