@@ -30,8 +30,7 @@ import com.loc.newsapp.presentation.navgraph.NavGraph
 import com.loc.newsapp.presentation.navgraph.Route
 import com.loc.newsapp.presentation.news_navigator.components.BottomNavigationItem
 import com.loc.newsapp.presentation.news_navigator.components.NewsBottomNavigation
-import com.loc.newsapp.presentation.search.SearchScreen
-import com.loc.newsapp.presentation.search.SearchViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,9 +91,6 @@ fun NewsNavigator() {
                 HomeScreen(articles = articles, navController = navController)
             }
             composable(route = Route.SearchScreen.route) {
-                val viewModel: SearchViewModel = hiltViewModel()
-                val state = viewModel.state.value
-                SearchScreen(state = state, event = viewModel::onEvent)
             }
             composable(route = Route.DetailsScreen.route) {
 
