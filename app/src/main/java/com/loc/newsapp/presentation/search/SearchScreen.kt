@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
@@ -17,6 +20,7 @@ fun SearchScreen(
     state: SearchState,
     event:(SearchEvent) -> Unit
 ) {
+
     Column(
         modifier = Modifier
             .padding(top = MediumPadding1, start = MediumPadding1, end = MediumPadding1)
