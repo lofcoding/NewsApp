@@ -22,14 +22,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.loc.newsapp.domain.usecases.app_entry.AppEntryUseCases
+import com.loc.newsapp.domain.usecases.news.NewsUseCases
 import com.loc.newsapp.presentation.navgraph.NavGraph
 import com.loc.newsapp.presentation.navgraph.Route
 import com.loc.newsapp.presentation.onboarding.OnBoardingScreen
 import com.loc.newsapp.ui.theme.NewsAppTheme
+import com.loc.newsapp.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
