@@ -33,7 +33,7 @@ import com.loc.newsapp.presentation.navgraph.Route
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(articles: LazyPagingItems<Article>, navController: NavController) {
+fun HomeScreen(articles: LazyPagingItems<Article>, navigate:(String) -> Unit) {
 
     val titles by remember {
         derivedStateOf {
@@ -73,7 +73,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navController: NavController)
             onValueChange = {},
             onSearch = {},
             onClick = {
-                navController.navigate(Route.SearchScreen.route)
+                navigate(Route.SearchScreen.route)
             }
         )
 
