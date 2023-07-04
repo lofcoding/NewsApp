@@ -36,7 +36,7 @@ import com.loc.newsapp.presentation.news_navigator.components.NewsBottomNavigati
 @Composable
 fun NewsNavigator() {
 
-    val bottomNavigationItems = remember{
+    val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItem(icon = R.drawable.ic_home, text = "Home"),
             BottomNavigationItem(icon = R.drawable.ic_search, text = "Search"),
@@ -49,7 +49,7 @@ fun NewsNavigator() {
     var selectedItem by rememberSaveable {
         mutableStateOf(0)
     }
-    selectedItem = when(backStackState?.destination?.route){
+    selectedItem = when (backStackState?.destination?.route) {
         Route.HomeScreen.route -> 0
         Route.SearchScreen.route -> 1
         Route.BookmarkScreen.route -> 2
@@ -66,6 +66,7 @@ fun NewsNavigator() {
                         navController = navController,
                         route = Route.HomeScreen.route
                     )
+
                     1 -> navigateToTab(
                         navController = navController,
                         route = Route.SearchScreen.route
@@ -88,7 +89,9 @@ fun NewsNavigator() {
             composable(route = Route.HomeScreen.route) {
                 val viewModel: HomeViewModel = hiltViewModel()
                 val articles = viewModel.news.collectAsLazyPagingItems()
-                HomeScreen(articles = articles, navController = navController)
+                HomeScreen(
+                    articles = articles,
+                    navigate = { navigateToTab(navController = navController, route = it) })
             }
             composable(route = Route.SearchScreen.route) {
             }
