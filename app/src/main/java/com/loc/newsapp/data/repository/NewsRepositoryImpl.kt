@@ -50,5 +50,7 @@ class NewsRepositoryImpl(
         return newsDao.getArticles()
     }
 
-
+    override suspend fun getArticle(url: String): Article? {
+        return newsDao.getArticle(url = url)
+    }
 }
