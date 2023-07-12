@@ -1,11 +1,10 @@
 package com.loc.newsapp.presentation.mainActivity
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.loc.newsapp.domain.usecases.app_entry.AppEntryUseCases
+import com.loc.newsapp.domain.usecases.app_entry.ReadAppEntry
 import com.loc.newsapp.presentation.navgraph.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val appEntryUseCases: AppEntryUseCases
+    private val readAppEntry: ReadAppEntry
 ): ViewModel() {
 
     private val _splashCondition = mutableStateOf(true)
@@ -25,7 +24,7 @@ class MainViewModel @Inject constructor(
     val startDestination: State<String> = _startDestination
 
     init {
-        appEntryUseCases.readAppEntry().onEach { shouldStartFromHomeScreen ->
+        readAppEntry().onEach { shouldStartFromHomeScreen ->
             if(shouldStartFromHomeScreen){
                 _startDestination.value = Route.NewsNavigation.route
             }else{

@@ -10,8 +10,9 @@ import com.loc.newsapp.data.remote.SearchNewsPagingSource
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NewsRepositoryImpl(
+class NewsRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi,
     private val newsDao: NewsDao
 ) : NewsRepository {
