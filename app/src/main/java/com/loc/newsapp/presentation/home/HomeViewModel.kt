@@ -20,4 +20,18 @@ class HomeViewModel @Inject constructor(
         sources = listOf("bbc-news","abc-news","al-jazeera-english")
     ).cachedIn(viewModelScope)
 
+    fun onEvent(event: HomeEvent){
+        when(event){
+            is HomeEvent.UpdateScrollValue -> updateScrollValue(event.newValue)
+            is HomeEvent.UpdateMaxScrollingValue -> updateMaxScrollingValue(event.newValue)
+        }
+    }
+
+    private fun updateScrollValue(newValue: Int){
+        state.value = state.value.copy(scrollValue = newValue)
+    }
+    private fun updateMaxScrollingValue(newValue: Int){
+        state.value = state.value.copy(maxScrollingValue = newValue)
+    }
+
 }

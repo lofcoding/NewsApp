@@ -119,7 +119,9 @@ fun NewsNavigator() {
                             navController = navController,
                             article = article
                         )
-                    }
+                    },
+                    event = viewModel::onEvent,
+                    state = viewModel.state.value
                 )
             }
             composable(route = Route.SearchScreen.route) {
