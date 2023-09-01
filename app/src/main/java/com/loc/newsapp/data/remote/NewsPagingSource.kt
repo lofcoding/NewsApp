@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.loc.newsapp.domain.model.Article
+import kotlinx.coroutines.delay
 
 class NewsPagingSource(
     private val newsApi: NewsApi,
@@ -23,6 +24,7 @@ class NewsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val page = params.key ?: 1
         return try {
+            delay(10000)
             val newsResponse = newsApi.getNews(sources = sources, page = page)
             totalNewsCount += newsResponse.articles.size
             val articles = newsResponse.articles.distinctBy { it.title } //Remove duplicates
