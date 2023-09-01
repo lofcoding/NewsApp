@@ -6,6 +6,8 @@ plugins {
     id 'kotlin-parcelize'
 
 }
+def Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
     namespace 'com.loc.newsapp'
@@ -22,6 +24,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        buildConfigField("String","API_KEY",properties.getProperty("API_KEY"))
     }
 
     buildFeatures {
