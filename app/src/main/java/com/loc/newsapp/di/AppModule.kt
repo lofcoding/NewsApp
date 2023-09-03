@@ -1,11 +1,13 @@
 package com.loc.newsapp.di
 
 import android.app.Application
+import android.net.ConnectivityManager
 import androidx.room.Room
 import com.loc.newsapp.data.local.NewsDao
 import com.loc.newsapp.data.local.NewsDatabase
 import com.loc.newsapp.data.local.NewsTypeConvertor
 import com.loc.newsapp.data.manger.LocalUserMangerImpl
+import com.loc.newsapp.data.manger.NewsConnectivityManger
 import com.loc.newsapp.data.remote.NewsApi
 import com.loc.newsapp.domain.manger.LocalUserManger
 import com.loc.newsapp.domain.usecases.app_entry.ReadAppEntry
@@ -54,5 +56,11 @@ object AppModule {
     fun provideNewsDao(
         newsDatabase: NewsDatabase
     ): NewsDao = newsDatabase.newsDao
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(
+        application: Application
+    ) = NewsConnectivityManger(application)
 
 }

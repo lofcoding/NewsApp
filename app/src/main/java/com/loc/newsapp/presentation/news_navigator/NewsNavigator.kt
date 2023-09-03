@@ -5,16 +5,25 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -26,6 +35,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.loc.newsapp.R
+import com.loc.newsapp.data.manger.ConnectionState
+import com.loc.newsapp.data.manger.NewsConnectivityManger
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.presentation.bookmark.BookmarkScreen
 import com.loc.newsapp.presentation.bookmark.BookmarkViewModel
@@ -38,10 +49,13 @@ import com.loc.newsapp.presentation.news_navigator.components.BottomNavigationIt
 import com.loc.newsapp.presentation.news_navigator.components.NewsBottomNavigation
 import com.loc.newsapp.presentation.search.SearchScreen
 import com.loc.newsapp.presentation.search.SearchViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsNavigator() {
+fun NewsNavigator(
+    newsConnectivityManger: NewsConnectivityManger
+) {
 
     val bottomNavigationItems = remember {
         listOf(
@@ -50,6 +64,7 @@ fun NewsNavigator() {
             BottomNavigationItem(icon = R.drawable.ic_bookmark, text = "Bookmark"),
         )
     }
+
 
     val navController = rememberNavController()
     val backStackState = navController.currentBackStackEntryAsState().value
@@ -69,34 +84,62 @@ fun NewsNavigator() {
                 backStackState?.destination?.route == Route.SearchScreen.route ||
                 backStackState?.destination?.route == Route.BookmarkScreen.route
     }
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
+    val noInternetConnectionText = stringResource(id = R.string.no_internet_connection)
+    LaunchedEffect(key1 = true) {
+        newsConnectivityManger.connectionState.collect {
+            when (it) {
+                ConnectionState.Connected -> {
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                }
 
-    Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
-        if (isBottomBarVisible) {
-            NewsBottomNavigation(
-                items = bottomNavigationItems,
-                selectedItem = selectedItem,
-                onItemClick = { index ->
-                    when (index) {
-                        0 -> navigateToTab(
-                            navController = navController,
-                            route = Route.HomeScreen.route
-                        )
-
-                        1 -> navigateToTab(
-                            navController = navController,
-                            route = Route.SearchScreen.route
-                        )
-
-                        2 -> navigateToTab(
-                            navController = navController,
-                            route = Route.BookmarkScreen.route
+                ConnectionState.NotConnected -> {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            noInternetConnectionText,
+                            duration = SnackbarDuration.Indefinite
                         )
                     }
                 }
-            )
+
+                ConnectionState.Unknown -> {
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                }
+            }
+
         }
-    }) {
+
+    }
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        modifier = Modifier.fillMaxSize(), bottomBar = {
+            if (isBottomBarVisible) {
+                NewsBottomNavigation(
+                    items = bottomNavigationItems,
+                    selectedItem = selectedItem,
+                    onItemClick = { index ->
+                        when (index) {
+                            0 -> navigateToTab(
+                                navController = navController,
+                                route = Route.HomeScreen.route
+                            )
+
+                            1 -> navigateToTab(
+                                navController = navController,
+                                route = Route.SearchScreen.route
+                            )
+
+                            2 -> navigateToTab(
+                                navController = navController,
+                                route = Route.BookmarkScreen.route
+                            )
+                        }
+                    }
+                )
+            }
+        }) {
         val bottomPadding = it.calculateBottomPadding()
         NavHost(
             navController = navController,
