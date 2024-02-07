@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                    //OnBoardingScreen()
+                    OnBoardingScreen()
                 }
             }
         }
