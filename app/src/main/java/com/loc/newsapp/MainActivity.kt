@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                     OnBoardingScreen()
+                    //does this count as coding?
                 }
             }
         }
