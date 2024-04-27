@@ -1,6 +1,7 @@
 package com.loc.newsapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
+import com.loc.newsapp.preferences.useCases.Cases
 import com.loc.newsapp.presentation.onboarding.onBoardingScreen
 import com.loc.newsapp.ui.theme.NewsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 // application playlist : https://www.youtube.com/playlist?list=PLzZEuVaFb9Exi-pc8qtHBrrLg8bUn-TP6
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var entryCases: Cases
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        to make the app screen behind the systemBar(statusBar)
@@ -26,6 +36,11 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window,false)
 //to install the splash screen
         installSplashScreen()
+        lifecycleScope.launch {
+            entryCases.readAppEntry().collect{
+                Log.d("flow is",it.toString())
+            }
+        }
         setContent {
             NewsAppTheme {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)){
