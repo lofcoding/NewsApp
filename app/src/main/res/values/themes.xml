@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.NewsApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.NewsApp" parent="android:Theme.Material.Light.NoActionBar" >
+<!--        to make the app screen behind systemBar(status bar)-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
 </resources>
