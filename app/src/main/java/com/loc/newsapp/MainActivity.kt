@@ -16,9 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.loc.newsapp.preferences.useCases.Cases
 import com.loc.newsapp.presentation.onboarding.onBoardingScreen
+import com.loc.newsapp.presentation.onboarding.viewModels.onBoardingViewModel
 import com.loc.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,7 +30,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
-    lateinit var entryCases: Cases
+    lateinit var cases: Cases
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        to make the app screen behind the systemBar(statusBar)
@@ -37,14 +39,15 @@ class MainActivity : ComponentActivity() {
 //to install the splash screen
         installSplashScreen()
         lifecycleScope.launch {
-            entryCases.readAppEntry().collect{
-                Log.d("flow is",it.toString())
+            cases.readAppEntry().collect{
+                Log.d("Saved",it.toString())
             }
         }
         setContent {
             NewsAppTheme {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)){
-                    onBoardingScreen()
+                    val boardViewModel : onBoardingViewModel = hiltViewModel()
+                    onBoardingScreen(boardViewModel::onEvent)
                 }
             }
         }

@@ -24,11 +24,14 @@ import com.loc.newsapp.presentation.onboarding.Dimens.MediumPadding2
 import com.loc.newsapp.presentation.onboarding.Dimens.pageIndicatorWidth
 import com.loc.newsapp.presentation.onboarding.components.onboardingPage
 import com.loc.newsapp.presentation.onboarding.components.pageIndicator
+import com.loc.newsapp.presentation.onboarding.viewModels.onBoardingEvents
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun onBoardingScreen() {
+fun onBoardingScreen(
+    onEvent : (onBoardingEvents) -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(0) {
             pages.size
@@ -71,9 +74,7 @@ fun onBoardingScreen() {
                 NewsButton(text = buttonState.value[1]) {
                     scope.launch {
                         if (pagerState.currentPage == 2){
-//                        TODO: navigate to home screen
-                            pagerState.animateScrollToPage(page = pagerState.initialPage)
-
+                            onEvent(onBoardingEvents.savaAppEntry)
                         }else{
                             pagerState.animateScrollToPage(page = pagerState.currentPage +1)
                         }
