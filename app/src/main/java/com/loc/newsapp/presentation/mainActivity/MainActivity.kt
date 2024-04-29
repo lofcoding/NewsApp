@@ -46,6 +46,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             NewsAppTheme(dynamicColor = false) {
+//               set system bar colors
                 val isSystemInDarkMode = isSystemInDarkTheme()
                 val systemUiColor = rememberSystemUiController()
                 SideEffect {
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
                         darkIcons = !isSystemInDarkMode
                     )
                 }
-                //Add fillMaxSize()
+                //Add fillMaxSize() to Box
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()) {
                     NavGraph(startDestination = viewModel.startDestination.value)
                 }
