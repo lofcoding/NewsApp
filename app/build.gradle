@@ -26,6 +26,9 @@ android {
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
         buildConfigField("String","API_KEY",properties.getProperty("API_KEY"))
+        buildConfigField("String","NEWS_DATABASE_NAME",properties.getProperty("NEWS_DATABASE_NAME"))
+        buildConfigField("String","BASE_URL",properties.getProperty("BASE_URL"))
+
     }
 
     buildTypes {

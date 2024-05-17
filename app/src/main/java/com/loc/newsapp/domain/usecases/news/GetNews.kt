@@ -10,7 +10,7 @@ class GetNews(
 ) {
 
     operator fun invoke(sources: List<String>): Flow<PagingData<Article>>{
-        return newsRepository.getNews(sources = sources)
+        return newsRepository.getNewsFromRepository(sources = sources)
     }
 
 }
