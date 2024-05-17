@@ -17,7 +17,7 @@ class HomeViewModel @Inject constructor(
     private val _state = mutableStateOf(HomeState())
     val state: State<HomeState> = _state
 
-    val news = newsUseCase.getNews(
+    val news = newsUseCase.getAllNews(
         sources = listOf("bbc-news", "abc-news", "al-jazeera-english")
     ).cachedIn(viewModelScope)
     fun onEvent(event: HomeEvent){

@@ -29,7 +29,6 @@ fun OnBoardingPage(
     modifier: Modifier = Modifier,
     page: Page
 ) {
-
     Column(modifier = modifier) {
         Image(
             modifier = Modifier
@@ -53,7 +52,6 @@ fun OnBoardingPage(
             color = colorResource(id = R.color.text_medium)
         )
     }
-
 }
 
 

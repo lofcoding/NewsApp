@@ -5,7 +5,7 @@ import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 
-class SearchNews(
+class GetSearchNews(
     private val newsRepository: NewsRepository
 ) {
 

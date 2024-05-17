@@ -29,20 +29,6 @@ import com.loc.newsapp.util.Dimens
 import com.loc.newsapp.util.Dimens.MediumPadding1
 import com.loc.newsapp.ui.theme.NewsAppTheme
 
-fun Modifier.shimmerEffect() = composed {
-    val transition = rememberInfiniteTransition()
-    val alpha = transition.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.9f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1000),
-            repeatMode = RepeatMode.Reverse
-        )
-    ).value
-    background(color = colorResource(id = R.color.shimmer).copy(alpha = alpha))
-}
-
-
 @Composable
 fun ArticleCardShimmerEffect(
     modifier: Modifier = Modifier
@@ -51,44 +37,46 @@ fun ArticleCardShimmerEffect(
     Row(modifier = modifier) {
 
         Box(
-            modifier = Modifier
+            modifier = shimmerEffect()
                 .size(Dimens.ArticleCardSize)
                 .clip(MaterialTheme.shapes.medium)
-                .shimmerEffect(),
-
-            )
-
+        )
         Column(
             verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .padding(horizontal = Dimens.ExtraSmallPadding)
-                .height(
-                    Dimens.ArticleCardSize
-                )
+                .height(Dimens.ArticleCardSize)
         ) {
             Box(
-                modifier = Modifier
+                modifier = shimmerEffect()
                     .fillMaxWidth()
                     .height(30.dp)
                     .padding(horizontal = MediumPadding1)
-                    .shimmerEffect(),
-
-                )
-
+            )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
+                    modifier = shimmerEffect()
                         .fillMaxWidth(0.5f)
                         .height(15.dp)
                         .padding(horizontal = MediumPadding1)
-                        .shimmerEffect(),
-
-                    )
+                )
             }
-
         }
-
     }
+}
+
+private fun shimmerEffect(): Modifier = Modifier.composed {
+    val transition = rememberInfiniteTransition(label = "Shimmer Effect")
+    val alpha = transition.animateFloat(
+        initialValue = 0.2f,
+        targetValue = 0.9f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "Shimmer Effect"
+    ).value
+    background(color = colorResource(id = R.color.shimmer).copy(alpha = alpha))
 }
 
 @Preview(showBackground = true)

@@ -2,13 +2,13 @@ package com.loc.newsapp.dependencyinjection
 
 import com.loc.newsapp.data.database.NewsDao
 import com.loc.newsapp.domain.repository.NewsRepository
-import com.loc.newsapp.domain.usecases.news.DeleteArticle
-import com.loc.newsapp.domain.usecases.news.GetNews
+import com.loc.newsapp.domain.usecases.news.DeleteArticleDatabase
+import com.loc.newsapp.domain.usecases.news.GetAllNews
 import com.loc.newsapp.domain.usecases.news.NewsUseCase
-import com.loc.newsapp.domain.usecases.news.SearchNews
-import com.loc.newsapp.domain.usecases.news.SelectArticle
-import com.loc.newsapp.domain.usecases.news.SelectArticles
-import com.loc.newsapp.domain.usecases.news.UpsertArticle
+import com.loc.newsapp.domain.usecases.news.GetSearchNews
+import com.loc.newsapp.domain.usecases.news.SelectBookmarkArticleDatabase
+import com.loc.newsapp.domain.usecases.news.SelectBookmarkAllArticleDatabase
+import com.loc.newsapp.domain.usecases.news.UpsertArticleDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,12 +26,12 @@ object UseCaseModule {
         newsDao: NewsDao
     ): NewsUseCase {
         return NewsUseCase(
-            getNews = GetNews(newsRepository),
-            searchNews = SearchNews(newsRepository),
-            upsertArticle = UpsertArticle(newsRepository),
-            deleteArticle = DeleteArticle(newsRepository),
-            selectArticles = SelectArticles(newsRepository),
-            selectArticle = SelectArticle(newsRepository)
+            getAllNews = GetAllNews(newsRepository),
+            getSearchNews = GetSearchNews(newsRepository),
+            upsertArticleDatabase = UpsertArticleDatabase(newsRepository),
+            deleteArticleDatabase = DeleteArticleDatabase(newsRepository),
+            selectBookmarkAllArticleDatabase = SelectBookmarkAllArticleDatabase(newsRepository),
+            selectBookmarkArticleDatabase = SelectBookmarkArticleDatabase(newsRepository)
         )
     }
 

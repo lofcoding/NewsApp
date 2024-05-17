@@ -2,13 +2,14 @@ package com.loc.newsapp.domain.usecases.news
 
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.domain.repository.NewsRepository
+import kotlinx.coroutines.flow.Flow
 
-class SelectArticle(
+class SelectBookmarkAllArticleDatabase(
     private val newsRepository: NewsRepository
 ) {
 
-    suspend operator fun invoke(url: String): Article?{
-        return newsRepository.selectBookmarkArticleRepository(url)
+    operator fun invoke(): Flow<List<Article>>{
+        return newsRepository.selectBookmarkArticlesRepository()
     }
 
 }

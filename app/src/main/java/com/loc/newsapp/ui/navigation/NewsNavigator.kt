@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,9 +50,7 @@ fun NewsNavigator() {
 
     val navController = rememberNavController()
     val backstackState = navController.currentBackStackEntryAsState().value
-    var selectedItem by rememberSaveable {
-        mutableStateOf(0)
-    }
+    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
 
     selectedItem = remember(key1 = backstackState) {
         when (backstackState?.destination?.route) {
@@ -83,12 +82,10 @@ fun NewsNavigator() {
                                 navController = navController,
                                 route = Route.HomeScreen.route
                             )
-
                             1 -> navigateToTap(
                                 navController = navController,
                                 route = Route.SearchScreen.route
                             )
-
                             2 -> navigateToTap(
                                 navController = navController,
                                 route = Route.BookmarkScreen.route
@@ -148,8 +145,7 @@ fun NewsNavigator() {
             composable(route = Route.DetailsScreen.route) {
                 val viewModel: DetailsViewModel = hiltViewModel()
                 if (viewModel.sideEffect != null) {
-                    Toast.makeText(LocalContext.current, viewModel.sideEffect, Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(LocalContext.current, viewModel.sideEffect, Toast.LENGTH_SHORT).show()
                     viewModel.onEvent(DetailsEvent.RemoveSideEffect)
                 }
                 navController.previousBackStackEntry?.savedStateHandle?.get<Article?>("article")

@@ -23,7 +23,7 @@ class DetailsViewModel @Inject constructor(
         when (event) {
             is DetailsEvent.UpsertDeleteArticle -> {
                 viewModelScope.launch {
-                    val article = newsUseCase.selectArticle(event.article.url)
+                    val article = newsUseCase.selectBookmarkArticleDatabase(event.article.url)
                     if (article == null) {
                         upsertArticle(event.article)
                     } else {
@@ -39,12 +39,12 @@ class DetailsViewModel @Inject constructor(
     }
 
     private suspend fun deleteArticle(article: Article) {
-        newsUseCase.deleteArticle(article = article)
+        newsUseCase.deleteArticleDatabase(article = article)
         sideEffect = "Article Deleted"
     }
 
     private suspend fun upsertArticle(article: Article) {
-        newsUseCase.upsertArticle(article = article)
+        newsUseCase.upsertArticleDatabase(article = article)
         sideEffect = "Article Saved"
     }
 

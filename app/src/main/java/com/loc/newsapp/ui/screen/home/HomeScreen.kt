@@ -34,7 +34,6 @@ import com.loc.newsapp.ui.component.common.ArticlesList
 import com.loc.newsapp.ui.component.common.SearchBar
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     state: HomeState,
