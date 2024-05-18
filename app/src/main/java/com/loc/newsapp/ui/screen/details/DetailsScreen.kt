@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -32,11 +34,16 @@ import com.loc.newsapp.ui.theme.NewsAppTheme
 @Composable
 fun DetailsScreen(
     article: Article,
+    sideEffect: Boolean?,
     event: (DetailsEvent) -> Unit,
+    controlBookmark: () -> Unit,
     navigateUp: () -> Unit
 ) {
-
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = article) {
+        controlBookmark.invoke()
+    }
 
     Column(
         modifier = Modifier
@@ -44,6 +51,7 @@ fun DetailsScreen(
             .statusBarsPadding()
     ) {
         DetailsTopBar(
+            sideEffect = sideEffect,
             onBrowsingClick = {
                 Intent(Intent.ACTION_VIEW).also {
                     it.data = Uri.parse(article.url)
@@ -126,10 +134,10 @@ fun DetailsScreenPreview() {
                 url = "https://consent.google.com/ml?continue=https://news.google.com/rss/articles/CBMiaWh0dHBzOi8vY3J5cHRvc2F1cnVzLnRlY2gvY29pbmJhc2Utc2F5cy1hcHBsZS1ibG9ja2VkLWl0cy1sYXN0LWFwcC1yZWxlYXNlLW9uLW5mdHMtaW4td2FsbGV0LXJldXRlcnMtY29tL9IBAA?oc%3D5&gl=FR&hl=en-US&cm=2&pc=n&src=1",
                 urlToImage = "https://media.wired.com/photos/6495d5e893ba5cd8bbdc95af/191:100/w_1280,c_limit/The-EU-Rules-Phone-Batteries-Must-Be-Replaceable-Gear-2BE6PRN.jpg"
             ),
-            event = {}
-        ) {
-
-        }
+            sideEffect = false,
+            event = {},
+            controlBookmark = {}
+        ) {}
     }
 }
 
