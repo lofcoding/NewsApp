@@ -8,6 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.domain.usecases.news.NewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +21,7 @@ class DetailsViewModel @Inject constructor(
     private val newsUseCase: NewsUseCase
 ) : ViewModel() {
 
-    var sideEffect by mutableStateOf<String?>(null)
-        private set
+    var sideEffect by mutableStateOf<Boolean?>(null)
 
     fun onEvent(event: DetailsEvent) {
         when (event) {
@@ -40,12 +44,19 @@ class DetailsViewModel @Inject constructor(
 
     private suspend fun deleteArticle(article: Article) {
         newsUseCase.deleteArticleDatabase(article = article)
-        sideEffect = "Article Deleted"
+        sideEffect = false
     }
 
     private suspend fun upsertArticle(article: Article) {
         newsUseCase.upsertArticleDatabase(article = article)
-        sideEffect = "Article Saved"
+        sideEffect = true
     }
 
+    fun controlBookmarkedArticle(article: Article) {
+        viewModelScope.launch {
+            newsUseCase.selectBookmarkAllArticleDatabase().collect {
+                sideEffect = it.contains(article)
+            }
+        }
+    }
 }

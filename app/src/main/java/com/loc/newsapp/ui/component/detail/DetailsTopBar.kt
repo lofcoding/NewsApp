@@ -14,23 +14,27 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.loc.newsapp.R
+import com.loc.newsapp.domain.model.Article
+import com.loc.newsapp.domain.model.Source
 import com.loc.newsapp.ui.theme.NewsAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsTopBar(
+    sideEffect: Boolean?,
     onBrowsingClick: () -> Unit,
     onShareClick: () -> Unit,
     onBookmarkClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-
     TopAppBar(
         title = { Text(text = "") },
         modifier = Modifier.fillMaxWidth(),
@@ -49,10 +53,17 @@ fun DetailsTopBar(
         },
         actions = {
             IconButton(onClick = onBookmarkClick) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_bookmark),
-                    contentDescription = null
-                )
+                if (sideEffect == true) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_bookmark_remove),
+                        contentDescription = null
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_bookmark_add),
+                        contentDescription = null
+                    )
+                }
             }
             IconButton(onClick = onShareClick) {
                 Icon(
@@ -77,6 +88,7 @@ fun DetailsTopBarPreivew() {
     NewsAppTheme {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             DetailsTopBar(
+                sideEffect = true,
                 onBrowsingClick = { /*TODO*/ },
                 onShareClick = { /*TODO*/ },
                 onBookmarkClick = { /*TODO*/ }) {
