@@ -21,6 +21,14 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField("String","API_KEY",properties.getProperty("API_KEY"))
+        buildConfigField("String","NEWS_DATABASE_NAME",properties.getProperty("NEWS_DATABASE_NAME"))
+        buildConfigField("String","BASE_URL",properties.getProperty("BASE_URL"))
+
     }
 
     buildTypes {
@@ -38,6 +46,7 @@ android {
     }
     buildFeatures {
         compose true
+        buildConfig true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.7"
